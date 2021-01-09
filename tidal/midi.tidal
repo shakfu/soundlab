@@ -1,0 +1,5 @@
+
+d1 $ rev $ note "0 2 4 7 11" # s "midi" # midichan 0
+
+
+hush

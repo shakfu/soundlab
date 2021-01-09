@@ -1,0 +1,10 @@
+
+# required
+sox
+
+
+
+# optional
+matplotplib
+litecli
+

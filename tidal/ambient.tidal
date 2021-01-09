@@ -1,0 +1,8 @@
+
+d1 $ sound "bd sd:1"
+
+p "gerard" $ sound "hh hh hh hh"
+
+d1 $ sound "[bd bd] [sd sd]"
+
+hush

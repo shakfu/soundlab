@@ -1,0 +1,62 @@
+d1 $ sound "[bd sn]*2 cp"
+
+d1 $ sound "[bd sn] cp/2"
+
+d1 $ sound "[bd sn sn*3]/2 [bd sn*3 bd*4]/3"
+
+d1 $ sound (every 4 (fast 4) "bd*2 [bd [sn sn*2 sn] sn]")
+
+d1 $ sound "bd*4 sn*4" # gain "[[1 0.8]*2 [0.5 0.7]]/2"
+
+d1 $ every 2 (|> speed "2") $ sound "arpy*4" |> speed "1"
+
+d1 $ every 3 (|- note "3") $ every 2 (|+ up "5") $ sound "arpy*4" |> note "0 2 4 5"
+
+d1 $ n (off 0.125 (+12) $ off 0.25 (+7) $ slow 2 $ "0(3,8) [5 7]") # sound "supergong"
+
+d1 $ n "[0 .. 7] [3 .. 1]" # sound "supergong"
+
+d1 $ speed "-1 -0.5 -2 -1.5" # sound "arpy"
+
+d1 $ sound "arpy" # speed "[1, 1.5]"
+
+d1 $ speed "[1 0.5, 1.5 2 3 4]" # sound "arpy"
+
+d1 $ sound "bd(5,8)"
+
+d1 $ sound "bd(3,8) sn(5,8)"
+
+d1 $ sound "bd([5 3]/2,8)"
+
+d1 $ sound "bd(2,5)"
+
+d2 $ sound "hh(3,5)"
+
+d1 $ sound "{bd hh sn cp, arpy bass2 drum notes can}"
+
+d1 $ sound "{arpy bass2 drum notes can, bd hh sn cp}"
+
+d1 $ sound "{arpy bass2 drum notes can}%4"
+
+d1 $ sound "arpy*4" # pan (range 0.25 0.75 $ rand)
+
+d1 $ every 5 (|+| speed "0.5") $ every 4 (0.25 <~) $ every 3 (rev) $
+  sound "bd sn arpy*2 cp"
+  # speed "[1 1.25 0.75 -1.5]/3"
+  
+d1 $ n "<[a5,cs5,e5,g5]*3 [d5,fs5,g5,c5]>" # s "supersquare" # gain "0.7"
+
+d1 $ every 16 (density 24 . (|+| midinote "24") . (# sustain "0.3") . (# attack "0.05"))
+ $ s "supercomparator/4" # midinote ((irand 24) + 24)
+ # sustain "8" # attack "0.5" # hold "4" # release "4"
+ # voice "0.5" # resonance "0.9" # lfo "1" # speed "30" # pitch1 "4"
+
+d1 $ s "supernoise/8" # midinote ((irand 10) + 30) # sustain "8"
+   # accelerate "0.5" # voice "0.5" # pitch1 "0.15" # slide "-0.5" # resonance "0.7"
+   # attack "1" # release "20" # room "0.9" # size "0.9" # orbit "1"
+
+d1 $ n "[c2 e3 g4 c5 c4 c3]*4/3" # s "superchip" # sustain "0.1"
+   # pitch2 "[1.2 1.5 2 3]" # pitch3 "[1.44 2.25 4 9]"
+   # voice (slow 4 "0 0.25 0.5 0.75") # slide "[0 0.1]/8" # speed "-4"
+
+hush
