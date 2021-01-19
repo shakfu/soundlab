@@ -11,6 +11,7 @@ To start it, press the RUN Button in the CsoundQt-toolbar, or choose "Control->R
 <CsoundSynthesizer>
 
 <CsOptions>
+-odac
 </CsOptions>
 
 <CsInstruments>

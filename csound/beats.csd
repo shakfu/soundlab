@@ -14,13 +14,13 @@ nchnls = 1
 
 ; Instrument #1 - Play an audio file normally.
 instr 1
-	asource soundin "beats.wav"
+	asource soundin "bell.wav"
 	out asource
 endin
 
 ; Instrument #2 - Cut-up an audio file.
 instr 2
-	asource soundin "beats.wav"
+	asource soundin "bell.wav"
 	ibps = 4
 	isubdiv = 8
 	ibarlength = 4
