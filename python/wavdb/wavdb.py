@@ -198,9 +198,7 @@ class SampleInfo:
 
     def get_row(self):
         info = self.get_info()
-        row = []
-        for f, _, _ in self.FIELDS:
-            row.append(info[f])
+        row = [info[f] for f, _, _ in self.FIELDS]
         return tuple(row)
 
     def get_output(self, args, **kwargs):
@@ -345,11 +343,11 @@ class SampleCollectionDB:
 
     def create(self):
         self.db.parent.mkdir()
-        stmt = "CREATE TABLE clips ({0})".format(
-            ", ".join(f'{f} {t}' for f,t,_ in SampleInfo.FIELDS))
         # print(stmt)
         self.open()
         with self.con as con:
+            stmt = "CREATE TABLE clips ({0})".format(
+                ", ".join(f'{f} {t}' for f,t,_ in SampleInfo.FIELDS))
             con.execute(stmt)
         self.close()
 
