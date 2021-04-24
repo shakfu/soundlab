@@ -68,6 +68,7 @@ sqlite3 tests-clips/_meta/clips.db \
 import argparse
 import logging
 import os
+import random
 import shutil
 import sqlite3
 import subprocess
@@ -419,7 +420,7 @@ class SampleCollection:
         if target.is_file():
             self.split_file(target, no_prefix)
         else:
-            assert target.is_dir()
+            assert target.is_dir(), "Target must be a directory"
             # targets var has to be list for progressbar
             targets = list(target.glob('*.wav'))
             for t in self._progressbar(targets, prefix=" processing: ", size=40):
@@ -556,6 +557,9 @@ class Application(metaclass=MetaCommander):
     @arg("path", help="path to audio file")
     def do_info(self, args):
         "display analysis"
+        if not os.path.isfile(args.path):
+            print("ERROR: path must be a file")
+            return
         d = SampleInfo(args.path).get_info()
         for f, t, _ in SampleInfo.FIELDS:
             print(f"{f:<15}\t{t:<15}\t{d[f]:<15}")
@@ -603,6 +607,35 @@ class Application(metaclass=MetaCommander):
 
         col = SampleCollection(path, from_dir=args.target, **config)
         col.split(no_prefix=args.no_prefix)
+
+    @arg("path", help="path to collection folder")
+    @option("-s", "--shuffle", action="store_true", help="shuffle result")
+    @option("-o", "--output", help="output path to export to", default="wavdb-exported")
+    def do_export(self, args):
+        "export content from collection"
+        result=[]
+        for root, dirs, files in os.walk(args.path):
+            if root.endswith('_meta'):
+                continue
+            if not dirs:
+                for f in files:
+                    p = os.path.join(root, f)
+                    result.append(p)
+        if args.shuffle:
+            random.shuffle(result)
+        try:
+            os.mkdir(args.output)
+        except FileExistsError:
+            print("output directory already exists")
+            return
+        for i, p in enumerate(result):
+            i += 1
+            name = f"{i:03d}.wav"
+            dst = os.path.join(args.output, name)
+            shutil.copy(p, dst)
+        print("done")
+
+
 
 
     @arg("path", help="path to source collection")
