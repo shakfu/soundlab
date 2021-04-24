@@ -409,7 +409,7 @@ class SampleCollection:
         file.write("\n")
         file.flush()
 
-    def split(self, target=None):
+    def split(self, target=None, no_prefix=False):
         self.log.info("splitting files")
         if not target and self.from_dir:
             target = self.from_dir
@@ -419,19 +419,19 @@ class SampleCollection:
             raise Exception(f"Collection already exists {self.path}")
 
         if target.is_file():
-            self.split_file(target)
+            self.split_file(target, no_prefix)
         else:
             assert target.is_dir()
             # targets var has to be list for progressbar
             targets = list(target.glob('*.wav'))
             for t in self._progressbar(targets, prefix=" processing: ", size=40):
-                self.split_file(t.absolute())
+                self.split_file(t.absolute(), no_prefix)
 
         if not self.config['skip_db']:
             self.db.create()
             self.db.populate()
 
-    def split_file(self, target):
+    def split_file(self, target, no_prefix=False):
         # self.log.info(f"splitting {target}")
         silence_duration = self.config.get('silence_duration')
         silence_threshold = self.config.get('silence_threshold')
@@ -450,7 +450,11 @@ class SampleCollection:
         silence = f"silence 1 {silence_duration} {silence_threshold} 1 {silence_duration} {silence_threshold}".split()
         speed = "speed 0.5".split()
         newfile_restart = ": newfile : restart".split()
-        self.sox([_prepfile, f'{clips}/{target.stem}-.wav'] + silence + speed + newfile_restart)
+        if no_prefix:
+            body = [_prepfile, f'{clips}/.wav']
+        else:
+            body = [_prepfile, f'{clips}/{target.stem}-.wav']
+        self.sox(body + silence + speed + newfile_restart)
 
         for f in Path('.').glob(f'{clips}/{target.stem}-*.wav'):
             faded = f'{clips}/{f.stem}-faded.wav'
@@ -583,6 +587,7 @@ class Application(metaclass=MetaCommander):
     @option("-o", "--output", help="output path to new sample collection folder")
     @option("-t", "--silence-threshold", help="split on silence threshold as percent of volume", default="1%")
     @option("-d", "--silence-duration", type=float, help="split on silence duration in seconds", default=0.1)
+    @option("-p", "--no-prefix", default=False, action="store_true", help="no prefix from name of each split part")
     @option("-f", "--fade-time", type=float, help="fade time in seconds", default=0.02)
     @option("-s", "--skip-db", action='store_true', help="skip creation of an sqlite db for clip metadata")
     def do_split(self, args):
@@ -599,7 +604,7 @@ class Application(metaclass=MetaCommander):
             path = args.output
 
         col = SampleCollection(path, from_dir=args.target, **config)
-        col.split()
+        col.split(no_prefix=args.no_prefix)
 
 
     @arg("path", help="path to source collection")
