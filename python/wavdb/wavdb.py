@@ -61,8 +61,6 @@ sqlite3 tests-clips/_meta/clips.db \
     "select parent, name, channels, bitrate, sample_rate, duration from clips order by duration desc"\
     > report.html
 
-
-
 """
 
 import argparse
