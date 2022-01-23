@@ -12,7 +12,48 @@ for comparison.
 import math
 
 
-def euclid(onsets, pulses):
+def euclid0(n: int, hits: int, offset: int = 0, length: int = 16):
+    """n and length are different (n is a counter)
+
+    euclidean patterns recurs
+    """
+    for i in range(n):
+        s1 = i + offset
+        s2 = s1 * hits
+        s3 = s2 % length
+        s4 = int(s3 < hits)
+        yield s4
+
+
+def euclid1(hits: int, length: int = 16, offset: int = 0):
+    """n <==> length as generator
+    """
+    for i in range(length):
+        s1 = i + offset
+        s2 = s1 * hits
+        s3 = s2 % length
+        s4 = int(s3 < hits)
+        yield s4
+
+def euclid1a(hits: int, length: int = 16, offset: int = 0):
+    """n <==> length as generator
+    """
+    res = []
+    for i in range(length):
+        s1 = i + offset
+        s2 = s1 * hits
+        s3 = s2 % length
+        s4 = int(s3 < hits)
+        res.append(s4)
+    return res
+
+def euclid1b(hits: int, length: int = 16, offset: int = 0):
+    """one-liner (-:
+    """
+    return [int((((i + offset) * hits) % length) < hits) for i in range(length)]
+
+
+def euclid2(onsets, pulses):
     """returns a list of ones and zeros for a give euclidean rhythm
 
     >>> euclid(3,8)
@@ -27,7 +68,7 @@ def euclid(onsets, pulses):
         previous = current
     return result
 
-E=euclid
+E=euclid2
 
 
 def realign(lst):
