@@ -1,6 +1,22 @@
 #!/usr/bin/env python3
 """
-modprep: preparation of .wav samples and midi files for modular synthesis.
+# wavfmt: preparation of .wav samples for modular synthesis.
+
+## Modules
+
+- bastl-grandpa: mono, 22050hz, 16-bit
+- qubit-wave: mono, 44100hz, 16-bit
+- addac-wave: mono, 22050hz, 16-bit
+- endorphin-two-of-cups
+- erica-sample-drum
+- squarp-rample
+- makenoise-morphagene
+- 2hp-play
+- disting
+
+
+
+
 
 Audio Formats
 -------------
@@ -18,8 +34,6 @@ MIDI Formats
 Requirements
 ------------
 
-    pip install python-rtmidi
-    pip install mido
     pip install sox
 
 
