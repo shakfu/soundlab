@@ -1,0 +1,24 @@
+#N canvas 38 36 750 638 12;
+#X obj 20 300 cnv 15 720 320 empty empty tracks 20 12 0 12 -228856
+-66577 0;
+#X obj 30 199 inlet;
+#X obj 30 238 t f f f f f f f, f 100;
+#X obj 30 323 track BD 10 35 36 20 23 24 96 0 1 2 3 4 5 6 7 8 9;
+#X obj 146 323 track SD 10 40 38 25 28 29 97 10 21 22 23 24 25 26 27
+28 29;
+#X obj 262 324 track LT 10 41 43 46 47 48 102 30 31 32 33 34 35 36
+37 18 39;
+#X obj 378 323 track HC 10 54 39 58 59 60 106 40 41 42 43 44 45 46
+47 48 49;
+#X obj 494 323 track CH 10 44 42 61 62 63 107 50 51 52 53 54 55 56
+57 58 59;
+#X obj 610 322 track OH 10 58 46 80 81 82 108 60 61 62 63 64 65 66
+67 68 69;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 2 1 4 0;
+#X connect 2 2 5 0;
+#X connect 2 3 6 0;
+#X connect 2 4 7 0;
+#X connect 2 5 8 0;
+#X coords 0 -1 1 1 720 320 1 20 300;
