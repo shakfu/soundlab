@@ -1,66 +1,26 @@
 #!/usr/bin/env python3
-# PYTHON_ARGCOMPLETE_OK
-"""
-# wav - split on silence and store metadata in sqlite3 db
+"""wavdb - split on silence and store metadata in a sqlite3 db
 
+wavdb: a sample management app
 
-new commandline interface
+options:
+  -h, --help            show this help message and exit
+  -v, --version         show program's version number and exit
+  --db DB               wav db path (default: None)
 
-wavdb
-    --db 
-    --create
-    --update
-    --import
-    --export
-    
-
-    create --from-dir
-    split <target> --output --silence-threshold --silence-duration --fade-time --skip-db
-    clone <path> <dst> <sql>
-    delete <path> <sql> --noconfirm
-    shuffle <path> <dst> <sql>
-    fx <path> <dst> <sql> <chain>
-
-
-
-
-wavdb <db> (required)
-    create (will scan contents)
-    select|sql (arbitrary sql)
-    update|delete in-place operations
-    import <from_path> --format --fx-chain
-    export <to_path> --format --sql --fx-chain
-
-OR
-
-wavdb --db (optional path to db with default: $HOME/.wavdb)
-    info <path>
-    create (will scan contents)
-    select|sql (arbitrary sql)
-    update|delete in-place operations
-    import <from_path> --format --fx-chain
-    export <to_path> --format --sql --fx-chain
-
-
-
-current commandline interface
-
-wav
-    info <path>
-    db <collection>
-    split <target> --output --silence-threshold --silence-duration --fade-time --skip-db
-    clone <path> <dst> <sql>
-    delete <path> <sql> --noconfirm
-    shuffle <path> <dst> <sql>
-    fx <path> <dst> <sql> <chain>
-
-
-sqlite3 tests-clips/_meta/clips.db \
-    -cmd ".mode html" \
-    -cmd ".headers on" \
-    "select parent, name, channels, bitrate, sample_rate, duration from clips order by duration desc"\
-    > report.html
-
+subcommands:
+  valid subcommands
+                        additional help
+    cli                 database commandline interface
+    clone               clone sample collection
+    delete              delete clips in-place
+    export              export content from collection
+    fx                  apply an fx chain
+    info                display analysis
+    report              html report from sql query of db
+    shuffle             random shuffle of clips
+    split               split .wav files on silence thresholds
+    test                testing args
 """
 
 import argparse
@@ -568,7 +528,6 @@ class Application(metaclass=MetaCommander):
     def do_report(self, args):
         "html report from sql query of db"
         db = Path(args.collection) / '_meta' / 'clips.db'
-        # cmd = ['sqlite3', str(db), '-cmd', ".mode html", '-cmd', ".headers on", f"{args.sql}"]
         cmd = ['sqlite3', str(db), '-cmd', ".mode html", '-cmd', ".headers on", args.sql]
         result = subprocess.run(cmd, capture_output=True).stdout.decode('utf-8')
         with open(args.output, 'w') as f:
@@ -693,7 +652,6 @@ class Application(metaclass=MetaCommander):
                             version = '%(prog)s '+ self.version)
 
         ## default arg
-        # parser.add_argument('db', help='wav db path')
         parser.add_argument('--db', help='wav db path')
 
         # non-subcommands here

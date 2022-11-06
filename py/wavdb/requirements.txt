@@ -1,0 +1,12 @@
+
+# required
+sox
+
+# recommended
+# litecli
+
+
+# future extensions ??
+# matplotplib (charts)
+# soxbindings (speed?)
+

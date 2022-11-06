@@ -10,6 +10,9 @@ search space = 4 * 768 * 32 patterns = 98,304
 
 check: len(p) = 98,304
 
+
+WIP (still proof-of-concept stage)
+
 """
 
 import numpy as np

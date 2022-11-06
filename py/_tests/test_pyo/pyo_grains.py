@@ -1,8 +1,11 @@
+import os
 from pyo import *
+
+HOME = os.environ['HOME']
 
 s = Server().boot()
 s.start()
-snd = SndTable("/Users/sa/Music/samples/s01.wav")
+snd = SndTable(f"{HOME}/Music/samples/s01.wav")
 env = HannTable()
 pos = Phasor(freq=snd.getRate()*.25, mul=snd.getSize())
 dur = Noise(mul=.001, add=.1)
