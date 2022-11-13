@@ -13,7 +13,7 @@ import math
 
 
 def euclid(onsets, pulses):
-    """returns a list of ones and zeros for a give euclidean rhythm
+    """returns a list of ones and zeros for a given euclidean rhythm
 
     >>> euclid(3,8)
     [1, 0, 0, 1, 0, 0, 1, 0]
@@ -28,6 +28,39 @@ def euclid(onsets, pulses):
     return result
 
 E=euclid
+
+def euclid_str(pulses, steps):
+    """returns a string of ones and zeros for a given euclidean rhythm
+    
+    >>> euclid_str(3, 8)
+    '10010010'
+
+    """
+    if (pulses > steps):
+        pulses = steps
+    a = "1"
+    b = "0"
+    k = pulses
+    m = steps - pulses
+    while (m > 1 and k > 1):
+        cpy = a
+        a += b
+        if k <= m:
+            m -= k
+        else:
+            b = cpy
+            tmp = k
+            k = m
+            m = tmp - m
+    rhythm = ""
+    while (k > 0):
+        rhythm += a
+        k -= 1
+    while (m > 0):
+        rhythm += b
+        m -= 1
+    return rhythm
+
 
 
 def realign(lst):
