@@ -67,3 +67,29 @@ def euclid(pulses, steps):
         m -= 1
     return rhythm
 ```
+
+## Mentioned on Hacker News:
+
+[clumsy-math](https://github.com/clumsycomputer/clumsy-math/tree/alpha/library/rhythm)
+in typescript has some functions covering euclidean rhythms.
+
+Also this lua example (untested):
+
+```lua
+function b2n(boo)
+	return boo and 1 or 0
+end
+
+function eu(index, length, beats, offset)
+	return b2n((((index + offset) * beats) % length) < beats)
+end
+
+function euquence(length, beats, offset)
+	local l = {}
+	for i=0,length do
+		local r = eu(i, length, beats, offset)
+		table.insert(l,r)
+	end
+	return table.concat(l,' ')
+end
+````
